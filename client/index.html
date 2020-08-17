@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    function do_it() {
+        ipaddress = document.getElementById("ipaddress").value;
+        port = document.getElementById("port").value;
+        var ws = new WebSocket("ws://" + ipaddress + ":" + port + "/");
+        ws.onopen = function() {
+            console.log("connected");
+        }
+        ws.onmessage = function(event) {
+            var msg = event.data;
+            console.log("received {} bytes...",msg.length);
+        }
+        ws.onclose = function(event) {
+            console.log("connection closed");
+        }
+    }
+</script>
+</head>
+<body>
+<h1>WebSocket Streaming Speed Test</h1>
+<label for="ipaddress">IP address:</label><br>
+<input type="text" id="ipaddress" name="ipaddress" value="127.0.0.1"><br>
+<label for="port">Port:</label><br>
+<input type="text" id="port" name="port" value="6502"><br>
+<br>
+<input type="submit" value="Start Test" onclick="do_it()">
+</body>
+</html>
